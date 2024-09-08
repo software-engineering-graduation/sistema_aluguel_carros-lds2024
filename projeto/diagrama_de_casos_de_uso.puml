@@ -1,2 +1,36 @@
-@startuml
+@startuml Diagrama de Casos de Uso
+left to right direction
+
+actor "Cliente" as cliente
+actor "Agente" as agente /' Empresas e Bancos '/
+
+rectangle "Sistema de aluguel de carros" {
+    usecase "Realizar cadastro" as uc_cadastro
+    
+    usecase "Criar pedido de aluguel" as uc_criar_pedido
+    usecase "Modificar pedido de aluguel" as uc_modificar_pedido
+    usecase "Consultar pedido de aluguel" as uc_consultar_pedido
+    usecase "Cancelar pedido de aluguel" as uc_cancelar_pedido
+
+    usecase "Avaliar pedido de aluguel" as uc_avaliar_pedido
+}
+
+cliente -- uc_cadastro
+agente -- uc_cadastro
+
+cliente -- uc_criar_pedido
+cliente -- uc_modificar_pedido
+cliente -- uc_consultar_pedido
+cliente -- uc_cancelar_pedido
+
+agente -- uc_modificar_pedido
+agente -- uc_avaliar_pedido
+
+
+uc_avaliar_pedido ..> uc_criar_pedido : "<<extend>>"
+
+uc_modificar_pedido ..> uc_cadastro : "<<extend>>"
+uc_consultar_pedido ..> uc_cadastro : "<<extend>>"
+uc_cancelar_pedido ..> uc_cadastro : "<<extend>>"
+uc_criar_pedido ..> uc_cadastro : "<<extend>>"
 @enduml
