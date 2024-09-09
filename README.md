@@ -13,9 +13,9 @@ Pretende-se desenvolver um sistema para apoio à gestão de aluguéis de automó
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/zezit">
+      <a href="https://github.com/luccaluchi">
         <img src="https://avatars.githubusercontent.com/u/99565657?v=4" width="100px;" alt="José Victor Mendes Dias"/><br />
-        <sub><b>José Victor Mendes Dias</b></sub>
+        <sub><b>Lucca Angelo Luchi</b></sub>
       </a>
     </td>
   </tr>
