@@ -9,3 +9,5 @@
 
 ## Diagrama de pacotes
 ![Diagrama de pacotes](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/software-engineering-graduation/sistema_aluguel_carros-lds2024/main/projeto/diagrama_de_pacotes.puml)
+
+- [Histórias de usuário](./historias_de_usuario.md)
