@@ -1,2 +1,152 @@
 @startuml
+abstract class User{
+    -Long id
+    -String name
+    -String cpf
+    -String rg
+    -String email
+}
+
+class Employee{
+    -String position
+}
+
+class Customer{
+    -Date birthDay
+    -Address address
+    -String Occupation
+    -List<Income> incomes
+}
+
+class Income{
+    -String employer
+    -double amount
+    -LocalDate dateReceived
+}
+
+class Address{
+    -Long id
+    -String street
+    -String number
+    -String complement
+    -String neighborhood
+    -String city
+    -String state
+    -String postalCode
+}
+
+class Vehicle{
+    -Long id
+    -VehicleType vehicleType
+    -String model
+    -int year
+    -String color
+    -String licensePlate
+    -double mileage
+    -VehicleStatus status    
+}
+
+Enum VehicleType{
+ CAR
+ MOTORCYCLE
+}
+
+Enum VehicleStatus{
+    AVAILABLE
+    RENTED
+    UNDER_MAINTENANCE
+    RESERVED
+    OUT_OF_SERVICE
+}
+
+class Rent{
+    -Long Id
+    -Car car
+    -Customer customer
+    -LocalDate rentDate
+    -LocalDate returnDate
+    -double dailyRate
+    -Insurance insurance
+    -double totalAmount
+    -RentStatus Status
+    -FinancialStatus financialStatus
+}
+
+Enum FinancialStatus{
+    PENDING_FINANCIAL_APPROVAL
+    FINANCIAL_APPROVAL
+    FINANCIAL_DENIED
+}
+
+Enum RentStatus{
+    ACTIVE
+    COMPLETED
+    CANCELLED
+    PENDING
+    OVERDUE
+}
+
+class Agency{
+    -Long id
+    -String name
+    -Address address
+    -Car cars
+    -Rent rents
+
+    +ListAvaliableVehicles()
+    +rentVehicle()
+    +receiveVehicle()
+    +updateInvoice()
+    +getCustomerRents(Customer customer)
+    +FindVehicleByLicensePlate(String licensePlate)
+    +getOverdueRents()
+}
+
+class Invoice{
+    -Long id
+    -Customer customer
+    -Rent rent
+    -Double tax
+    -Double fees
+}
+
+class Financial{
+    -Eployee employee
+
+    -checkPendingRents()
+    -checkApprovedRents()
+    -checkDeniedRents()
+    -cproveRent()
+    -denieRent()
+}
+
+class Insurance {
+    -Long id
+    -String name
+    -Vehicle VehicleModel
+    -double dailyAmount
+    -double fees
+}
+
+Customer o-- Address
+Customer o-- Income
+Rent o-- Vehicle
+Rent o-- Customer
+Rent o-- Insurance
+Agency o-- Address
+Agency o-- Vehicle
+Agency o-- Rent
+Invoice o-- Customer
+Invoice o-- Rent
+Financial o-- Employee
+Insurance o-- Vehicle
+
+User <|-- Employee
+User <|-- Customer
+
+VehicleType <|-- Vehicle
+VehicleStatus <|-- Vehicle
+FinancialStatus <|-- Rent
+RentStatus <|-- Rent
+
 @enduml
