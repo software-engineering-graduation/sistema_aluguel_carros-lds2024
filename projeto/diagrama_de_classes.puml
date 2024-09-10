@@ -1,152 +1,171 @@
 @startuml
-abstract class User{
+abstract class Usuario {
     -Long id
-    -String name
+    -String nome
     -String cpf
     -String rg
     -String email
 }
 
-class Employee{
-    -String position
+class Cliente {
+    -Date dataNascimento
+    -Endereco endereco
+    -String ocupacao
+    -List<Renda> rendas
 }
 
-class Customer{
-    -Date birthDay
-    -Address address
-    -String Occupation
-    -List<Income> incomes
+class Renda {
+    -String empregador
+    -double valor
+    -LocalDate dataRecebimento
 }
 
-class Income{
-    -String employer
-    -double amount
-    -LocalDate dateReceived
-}
-
-class Address{
+class Endereco {
     -Long id
-    -String street
-    -String number
-    -String complement
-    -String neighborhood
-    -String city
-    -String state
-    -String postalCode
+    -String rua
+    -String numero
+    -String complemento
+    -String bairro
+    -String cidade
+    -String estado
+    -String cep
 }
 
-class Vehicle{
+'matrícula, ano, marca, modelo e placa.
+class Veiculo {
     -Long id
-    -VehicleType vehicleType
-    -String model
-    -int year
-    -String color
-    -String licensePlate
-    -double mileage
-    -VehicleStatus status    
+    -TipoVeiculo tipoVeiculo
+    -String modelo
+    -int ano
+    -String cor
+    -String placa
+    -double quilometragem
+    -StatusVeiculo status    
 }
 
-Enum VehicleType{
- CAR
- MOTORCYCLE
+Enum TipoVeiculo {
+    CARRO
+    MOTO
+    CAMINHAO
+    VAN
+    ONIBUS
+    SUV
+    CONVERSIVEL
+    PICKUP
 }
 
-Enum VehicleStatus{
-    AVAILABLE
-    RENTED
-    UNDER_MAINTENANCE
-    RESERVED
-    OUT_OF_SERVICE
+Enum StatusVeiculo {
+    DISPONIVEL
+    INDISPONIVEL
+    ALUGADO
 }
 
-class Rent{
-    -Long Id
-    -Car car
-    -Customer customer
-    -LocalDate rentDate
-    -LocalDate returnDate
-    -double dailyRate
-    -Insurance insurance
-    -double totalAmount
-    -RentStatus Status
-    -FinancialStatus financialStatus
-}
-
-Enum FinancialStatus{
-    PENDING_FINANCIAL_APPROVAL
-    FINANCIAL_APPROVAL
-    FINANCIAL_DENIED
-}
-
-Enum RentStatus{
-    ACTIVE
-    COMPLETED
-    CANCELLED
-    PENDING
-    OVERDUE
-}
-
-class Agency{
+class Aluguel {
     -Long id
-    -String name
-    -Address address
-    -Car cars
-    -Rent rents
-
-    +ListAvaliableVehicles()
-    +rentVehicle()
-    +receiveVehicle()
-    +updateInvoice()
-    +getCustomerRents(Customer customer)
-    +FindVehicleByLicensePlate(String licensePlate)
-    +getOverdueRents()
+    -Carro carro
+    -Cliente cliente
+    -LocalDate dataAluguel
+    -LocalDate dataDevolucao
+    -double taxaDiaria
+    -Seguro seguro
+    -double valorTotal
+    -StatusAluguel status = Status.Pendente
+    -bool desejaAdiquirirVeiculo
 }
 
-class Invoice{
+Enum StatusFinanceiro {
+    PENDENTE
+    APROVADO
+    NEGADO
+}
+
+Enum StatusAluguel {
+    APROVADO
+    NEGADO
+    ATIVO
+    CONCLUIDO
+    CANCELADO
+    PENDENTE
+    ATRASADO
+}
+
+class Agencia {
     -Long id
-    -Customer customer
-    -Rent rent
-    -Double tax
-    -Double fees
+    -String nome
+    -Endereco endereco
+    -List<Veiculo> veiculos
+    -List<Aluguel> alugueis
+
+'    +listarVeiculosDisponiveis()
+'    +alugarVeiculo()
+'    +receberVeiculo()
+'    +atualizarFatura()
+'    +obterAlugueisCliente(Cliente cliente)
+'    +buscarVeiculoPorPlaca(String placa)
+'    +obterAlugueisAtrasados()
 }
 
-class Financial{
-    -Eployee employee
-
-    -checkPendingRents()
-    -checkApprovedRents()
-    -checkDeniedRents()
-    -cproveRent()
-    -denieRent()
-}
-
-class Insurance {
+class Fatura {
     -Long id
-    -String name
-    -Vehicle VehicleModel
-    -double dailyAmount
-    -double fees
+    -Cliente cliente
+    -Aluguel aluguel
+    -Double imposto
+    -Double taxas
 }
 
-Customer o-- Address
-Customer o-- Income
-Rent o-- Vehicle
-Rent o-- Customer
-Rent o-- Insurance
-Agency o-- Address
-Agency o-- Vehicle
-Agency o-- Rent
-Invoice o-- Customer
-Invoice o-- Rent
-Financial o-- Employee
-Insurance o-- Vehicle
+class Financeiro {
+'    -verificarAlugueisPendentes()
+'    -verificarAlugueisAprovados()
+'    -verificarAlugueisNegados()
+'    -aprovarAluguel()
+'    -negarAluguel()
+}
 
-User <|-- Employee
-User <|-- Customer
+class Contrato{
+    -Cliente cliente
+    -Agente agenteLocador
+    -Agente agenteFinanceiro
+    -Date dataInicio
+    -Date dataTermino
+    -Veiculo veiculoLocado
+    -TipoContrato tipoContrato
+    -StatusFinanceiro statusFinanceiro
+}
 
-VehicleType <|-- Vehicle
-VehicleStatus <|-- Vehicle
-FinancialStatus <|-- Rent
-RentStatus <|-- Rent
+Enum TipoContrato{
+    12_MESES
+    24_MESES
+    36_MESES
+    48_MESES
+}
 
+
+class Seguro {
+    -Long id
+    -String nome
+    -Veiculo veiculoModelo
+    -double valorDiario
+    -double taxas
+}
+
+Cliente o-- Endereco
+Cliente o-- Renda
+Aluguel o-- Veiculo
+Aluguel o-- Cliente
+Aluguel o-- Seguro
+Agencia o-- Endereco
+Agencia o-- Veiculo
+Agencia o-- Aluguel
+Fatura o-- Cliente
+Fatura o-- Aluguel
+Financeiro o-- Funcionario
+Seguro o-- Veiculo
+
+Usuario <|-- Funcionario
+Usuario <|-- Cliente
+
+TipoVeiculo <|-- Veiculo
+StatusVeiculo <|-- Veiculo
+StatusFinanceiro <|-- Aluguel
+StatusAluguel <|-- Aluguel
 @enduml
