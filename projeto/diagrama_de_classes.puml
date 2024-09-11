@@ -1,3 +1,4 @@
+
 @startuml
 abstract class Usuario {
     -Long id
@@ -40,7 +41,9 @@ class Veiculo {
     -String cor
     -String placa
     -double quilometragem
-    -StatusVeiculo status    
+    -StatusVeiculo status
+    -Seguro seguro
+    
 }
 
 Enum TipoVeiculo {
@@ -67,7 +70,6 @@ class Aluguel {
     -LocalDate dataAluguel
     -LocalDate dataDevolucao
     -double taxaDiaria
-    -Seguro seguro
     -double valorTotal
     -StatusAluguel status = Status.Pendente
     -bool desejaAdiquirirVeiculo
@@ -132,6 +134,11 @@ class Contrato{
     -StatusFinanceiro statusFinanceiro
 }
 
+class ContratoDeCredito{
+    -Banco banco
+    -Cliente cliente
+}
+
 Enum TipoContrato{
     12_MESES
     24_MESES
@@ -139,12 +146,21 @@ Enum TipoContrato{
     48_MESES
 }
 
+class InstituiçaoFinanceira{
+
+}
+
+class Banco{
+    -negarCredito()
+    -gerarContrato()
+}
+
 
 class Seguro {
     -Long id
     -String nome
     -Veiculo veiculoModelo
-    -double valorDiario
+    -double valor
     -double taxas
 }
 
@@ -164,8 +180,4 @@ Seguro o-- Veiculo
 Usuario <|-- Funcionario
 Usuario <|-- Cliente
 
-TipoVeiculo <|-- Veiculo
-StatusVeiculo <|-- Veiculo
-StatusFinanceiro <|-- Aluguel
-StatusAluguel <|-- Aluguel
 @enduml
