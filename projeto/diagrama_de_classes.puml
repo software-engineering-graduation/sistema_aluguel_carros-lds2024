@@ -1,129 +1,199 @@
-@startuml DiagramaDeClasses
-left to right direction
-
-enum StatusPedido {
-    PENDENTE
-    APROVADO
-    REPROVADO
-    CANCELADO
-    EXECUTADO
+@startuml
+abstract class Usuario {
+    -Long id
+    -String nome
+    -String cpf
+    -String rg
+    -String email
+    -String senha
 }
 
-enum StatusContrato {
-    ATIVO
-    INATIVO
+class Cliente extends Usuario {
+    -Date dataNascimento
+    -Endereco endereco
+    -String ocupacao
+    -List<Renda> renda
 }
 
-enum TipoUsuario {
-    CLIENTE
-    AGENTE
-    FUNCIONARIO_BANCO
-}
-
-class Usuario {
-    - id: int
-    - tipo: TipoUsuario
-    - nome: String
-    - email: String
-    - senha: String
-
-    + logar(email: String, senha: String): boolean
-}
-
-class Cliente {
-    - rg: String
-    - cpf: String
-    - profissao: String
-    - endereco: Endereco
-
-    - rendimentos: List<Cargos>
-}
-
-class Agente {
-}
-
-class FuncionarioBanco {
-    nomeBanco: String
-}
-
-class Cargos {
-    - id: int
-    - nome: String
-    - cnpj: String
-    - atual: boolean
-    - renda: double
-    - dataInicio: Date
-    - dataFim: Date
+class Renda {
+    -String empregador
+    -double valor
+    -LocalDate dataRecebimento
 }
 
 class Endereco {
-    - id: int
-    - rua: String
-    - numero: int
-    - bairro: String
-    - cidade: String
-    - estado: String
-    - cep: String
+    -Long id
+    -String rua
+    -String numero
+    -String complemento
+    -String bairro
+    -String cidade
+    -String estado
+    -String cep
 }
 
-class PedidoAluguel {
-    - id: int
-    - dataCriacao: Date
-    - status: StatusPedido
-    - valor: double
-    - contrato: ContratoAluguel
+class Veiculo {
+    -Long id
+    -TipoVeiculo tipoVeiculo
+    -String matriculaVeiculo
+    -String marcaVeiculo
+    -String modelo
+    -int ano
+    -String cor
+    -String placa
+    -double quilometragem
+    -StatusVeiculo status
+    
 }
 
-class ContratoAluguel {
-    - id: int
-    - dataInicio: Date
-    - dataFim: Date
-    - duracao: int
-    - valor: double
-    - status: StatusContrato
-    - credito: Credito
+class PedidoDeAluguel {
+    -Long id
+    -Carro carro
+    -Cliente cliente
+    -LocalDate dataPedidoDeAluguel
+    -LocalDate dataDevolucao
+    -double taxaDiaria
+    -double valorTotal
+    -StatusPedidoDeAluguel status = Status.Pendente
+    -bool desejaAdiquirirVeiculo
+    -bool executarContratoDeLocacao = false
+    -StatusContratoDeCredito statusContratoDeCredito
+
+    -solicitarSeguroDeCredito()
+    -executarContratoDeLocacao()
 }
 
-class Automovel {
-    - id: int
-    - matricula: String
-    - ano: int
-    - marca: String
-    - modelo: String
-    - placa: String
+Enum TipoVeiculo {
+    CARRO
+    MOTO
+    CAMINHAO
+    VAN
+    ONIBUS
+    SUV
+    CONVERSIVEL
+    PICKUP
 }
 
-class Credito {
-    - id: int
-    - valor: double
-    - taxaJuros: double
-    - condedente: FuncionarioBanco
+Enum StatusVeiculo {
+    DISPONIVEL
+    INDISPONIVEL
+    ALUGADO
 }
 
-Usuario <|-- Cliente
-Usuario <|-- Agente
-Usuario <|-- FuncionarioBanco
 
-Cliente -- PedidoAluguel : solicita >
+Enum StatusFinanceiro {
+    PENDENTE
+    APROVADO
+    NEGADO
+}
 
-Agente "1" -- "*" PedidoAluguel : avalia >
+Enum StatusPedidoDeAluguel {
+    APROVADO
+    NEGADO
+    ATIVO
+    CONCLUIDO
+    CANCELADO
+    PENDENTE
+    ATRASADO
+}
 
-FuncionarioBanco -- Credito : concede >
+Enum StatusContratoDeCredito{
+    NAO_DESEJA
+    PENDENTE
+    APROVADO
+    NEGADO
+}
 
-PedidoAluguel "1" -- "1" Automovel : aluga >
-PedidoAluguel "1" -- "1" Credito : associado a >
+Enum TipoContrato{
+    12_MESES
+    24_MESES
+    36_MESES
+    48_MESES
+}
 
-ContratoAluguel "1" -- "1" PedidoAluguel : refere-se a >
-ContratoAluguel "1" -- "1" Automovel : utiliza >
+Enum SituacaoFatura{
+    PAGA
+    PENDENTE
+    ATRASADA
+    CANCELADA
+}
 
-Credito "1" ..> "1" ContratoAluguel : associado a >
+class Agencia {
+    -Long id
+    -String nome
+    -Endereco endereco
+}
 
-Cliente "1" -- "0..3" Cargos : possui >
+class Fatura {
+    -Long id
+    -Date periodoDeReferencia
+    -Cliente cliente
+    -PedidoDeAluguel PedidoDeAluguel
+    -Double imposto
+    -Double taxas
+    -Double valorTotal
+    -SituacaoFatura situacaoFatura
+}
 
-Cliente "1" -- "1" Endereco : reside em >
+class Financeiro {
+    -verificarAlugueisPendentes()
+    -verificarAlugueisAprovados()
+    -verificarAlugueisNegados()
+    -aprovarPedidoDeAluguel()
+    -negarPedidoDeAluguel()
+    -verificarFaturasAtrasadas()
+}
 
-StatusPedido -- PedidoAluguel
-StatusContrato -- ContratoAluguel
-TipoUsuario -- Usuario
+class ContratoDeLocacao{
+    -Cliente cliente
+    -Agencia agenteLocador
+    -Date dataInicio
+    -Date dataTermino
+    -Veiculo veiculoLocado
+    -TipoContrato tipoContrato
+    -StatusFinanceiro statusFinanceiro
+    -ContratoSeguroDeCredito contratoSeguroDeCredito
 
+    -verificarSeguroDeCredito()
+    -gerarFatura()
+}
+
+class Agente extends Usuario{
+
+}
+
+class Banco{
+    -ContratoSeguroDeCredito contratoDeSeguroDeCredito 
+    -gerarNegativaDeCredito(PedidoDeAluguel)
+    -gerarContratoDeSeguroDeCredito(PedidoDeAluguel)
+}
+
+
+class ContratoSeguroDeCredito {
+    -Long id
+    -Banco segurador
+    -Double creditoLiberado
+    -Double taxaDeJuros
+    -PedidoDeAluguel PedidoDeAluguel
+}
+
+ContratoSeguroDeCredito "*" --* "1" Banco : Consede <
+
+ContratoDeLocacao "1" --* "1" PedidoDeAluguel : refere-se >
+ContratoDeLocacao "1" o-- "1" ContratoSeguroDeCredito : consedido a <
+
+PedidoDeAluguel "*" --* "1" Cliente : Solicita  <
+PedidoDeAluguel "*" --* "1" Agencia : Recebe >
+PedidoDeAluguel "1" --* "1" Veiculo : Reserva >
+PedidoDeAluguel "1" -- "*" Agente : Avalia <
+
+
+ContratoDeLocacao "1" *-- "*" Fatura : gera >
+
+Financeiro "1" o-- "*" Agente : Atua <
+
+Cliente "1" *-- "1" Endereco : reside em >
+Cliente "1" *-- "3" Renda : recebe >
+
+Agencia "1" *-- "1" Endereco : situada em >
 @enduml
