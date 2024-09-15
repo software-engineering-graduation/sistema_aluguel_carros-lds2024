@@ -1,183 +1,129 @@
+@startuml DiagramaDeClasses
+left to right direction
 
-@startuml
-abstract class Usuario {
-    -Long id
-    -String nome
-    -String cpf
-    -String rg
-    -String email
+enum StatusPedido {
+    PENDENTE
+    APROVADO
+    REPROVADO
+    CANCELADO
+    EXECUTADO
+}
+
+enum StatusContrato {
+    ATIVO
+    INATIVO
+}
+
+enum TipoUsuario {
+    CLIENTE
+    AGENTE
+    FUNCIONARIO_BANCO
+}
+
+class Usuario {
+    - id: int
+    - tipo: TipoUsuario
+    - nome: String
+    - email: String
+    - senha: String
+
+    + logar(email: String, senha: String): boolean
 }
 
 class Cliente {
-    -Date dataNascimento
-    -Endereco endereco
-    -String ocupacao
-    -List<Renda> rendas
+    - rg: String
+    - cpf: String
+    - profissao: String
+    - endereco: Endereco
+
+    - rendimentos: List<Cargos>
 }
 
-class Renda {
-    -String empregador
-    -double valor
-    -LocalDate dataRecebimento
+class Agente {
+}
+
+class FuncionarioBanco {
+    nomeBanco: String
+}
+
+class Cargos {
+    - id: int
+    - nome: String
+    - cnpj: String
+    - atual: boolean
+    - renda: double
+    - dataInicio: Date
+    - dataFim: Date
 }
 
 class Endereco {
-    -Long id
-    -String rua
-    -String numero
-    -String complemento
-    -String bairro
-    -String cidade
-    -String estado
-    -String cep
+    - id: int
+    - rua: String
+    - numero: int
+    - bairro: String
+    - cidade: String
+    - estado: String
+    - cep: String
 }
 
-'matrícula, ano, marca, modelo e placa.
-class Veiculo {
-    -Long id
-    -TipoVeiculo tipoVeiculo
-    -String modelo
-    -int ano
-    -String cor
-    -String placa
-    -double quilometragem
-    -StatusVeiculo status
-    -Seguro seguro
-    
+class PedidoAluguel {
+    - id: int
+    - dataCriacao: Date
+    - status: StatusPedido
+    - valor: double
+    - contrato: ContratoAluguel
 }
 
-Enum TipoVeiculo {
-    CARRO
-    MOTO
-    CAMINHAO
-    VAN
-    ONIBUS
-    SUV
-    CONVERSIVEL
-    PICKUP
+class ContratoAluguel {
+    - id: int
+    - dataInicio: Date
+    - dataFim: Date
+    - duracao: int
+    - valor: double
+    - status: StatusContrato
+    - credito: Credito
 }
 
-Enum StatusVeiculo {
-    DISPONIVEL
-    INDISPONIVEL
-    ALUGADO
+class Automovel {
+    - id: int
+    - matricula: String
+    - ano: int
+    - marca: String
+    - modelo: String
+    - placa: String
 }
 
-class Aluguel {
-    -Long id
-    -Carro carro
-    -Cliente cliente
-    -LocalDate dataAluguel
-    -LocalDate dataDevolucao
-    -double taxaDiaria
-    -double valorTotal
-    -StatusAluguel status = Status.Pendente
-    -bool desejaAdiquirirVeiculo
+class Credito {
+    - id: int
+    - valor: double
+    - taxaJuros: double
+    - condedente: FuncionarioBanco
 }
 
-Enum StatusFinanceiro {
-    PENDENTE
-    APROVADO
-    NEGADO
-}
-
-Enum StatusAluguel {
-    APROVADO
-    NEGADO
-    ATIVO
-    CONCLUIDO
-    CANCELADO
-    PENDENTE
-    ATRASADO
-}
-
-class Agencia {
-    -Long id
-    -String nome
-    -Endereco endereco
-    -List<Veiculo> veiculos
-    -List<Aluguel> alugueis
-
-'    +listarVeiculosDisponiveis()
-'    +alugarVeiculo()
-'    +receberVeiculo()
-'    +atualizarFatura()
-'    +obterAlugueisCliente(Cliente cliente)
-'    +buscarVeiculoPorPlaca(String placa)
-'    +obterAlugueisAtrasados()
-}
-
-class Fatura {
-    -Long id
-    -Cliente cliente
-    -Aluguel aluguel
-    -Double imposto
-    -Double taxas
-}
-
-class Financeiro {
-'    -verificarAlugueisPendentes()
-'    -verificarAlugueisAprovados()
-'    -verificarAlugueisNegados()
-'    -aprovarAluguel()
-'    -negarAluguel()
-}
-
-class Contrato{
-    -Cliente cliente
-    -Agente agenteLocador
-    -Agente agenteFinanceiro
-    -Date dataInicio
-    -Date dataTermino
-    -Veiculo veiculoLocado
-    -TipoContrato tipoContrato
-    -StatusFinanceiro statusFinanceiro
-}
-
-class ContratoDeCredito{
-    -Banco banco
-    -Cliente cliente
-}
-
-Enum TipoContrato{
-    12_MESES
-    24_MESES
-    36_MESES
-    48_MESES
-}
-
-class InstituiçaoFinanceira{
-
-}
-
-class Banco{
-    -negarCredito()
-    -gerarContrato()
-}
-
-
-class Seguro {
-    -Long id
-    -String nome
-    -Veiculo veiculoModelo
-    -double valor
-    -double taxas
-}
-
-Cliente o-- Endereco
-Cliente o-- Renda
-Aluguel o-- Veiculo
-Aluguel o-- Cliente
-Aluguel o-- Seguro
-Agencia o-- Endereco
-Agencia o-- Veiculo
-Agencia o-- Aluguel
-Fatura o-- Cliente
-Fatura o-- Aluguel
-Financeiro o-- Funcionario
-Seguro o-- Veiculo
-
-Usuario <|-- Funcionario
 Usuario <|-- Cliente
+Usuario <|-- Agente
+Usuario <|-- FuncionarioBanco
+
+Cliente -- PedidoAluguel : solicita >
+
+Agente "1" -- "*" PedidoAluguel : avalia >
+
+FuncionarioBanco -- Credito : concede >
+
+PedidoAluguel "1" -- "1" Automovel : aluga >
+PedidoAluguel "1" -- "1" Credito : associado a >
+
+ContratoAluguel "1" -- "1" PedidoAluguel : refere-se a >
+ContratoAluguel "1" -- "1" Automovel : utiliza >
+
+Credito "1" ..> "1" ContratoAluguel : associado a >
+
+Cliente "1" -- "0..3" Cargos : possui >
+
+Cliente "1" -- "1" Endereco : reside em >
+
+StatusPedido -- PedidoAluguel
+StatusContrato -- ContratoAluguel
+TipoUsuario -- Usuario
 
 @enduml
