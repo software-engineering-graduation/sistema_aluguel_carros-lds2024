@@ -168,6 +168,8 @@ class Banco{
     -gerarContratoDeSeguroDeCredito(PedidoDeAluguel)
 }
 
+class AgenteBancario extends Usuario{
+}
 
 class ContratoSeguroDeCredito {
     -Long id
@@ -196,4 +198,7 @@ Cliente "1" *-- "1" Endereco : reside em >
 Cliente "1" *-- "3" Renda : recebe >
 
 Agencia "1" *-- "1" Endereco : situada em >
+
+Banco "1" o-- "*" AgenteBancario : Avalia pedidos de crédito <
+
 @enduml
