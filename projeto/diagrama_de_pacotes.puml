@@ -14,9 +14,7 @@ package "Usuario e Clientes" {
 
 package "Agências" {
     class Agencia
-    class Endereco
 
-    Agencia *-- Endereco
 }
 
 package "Veículos" {
