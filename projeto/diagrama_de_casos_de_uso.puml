@@ -3,8 +3,8 @@ left to right direction
 
 actor "Usuário" as usuario
 actor "Cliente" as cliente
-actor "Empresa" as empresa
-actor "Banco" as banco
+actor "Funcionário da empresa" as empresa
+actor "Funcionário do banco" as banco
 
 rectangle "Sistema de aluguel de carros" {
     usecase "Realizar cadastro" as uc_cadastro
