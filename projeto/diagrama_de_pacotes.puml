@@ -1,2 +1,65 @@
 @startuml
+
+package "Usuario e Clientes" {
+    class Usuario
+    class Cliente
+    class Renda
+    class Agente
+
+    Cliente *-- Endereco
+    Cliente *-- Renda
+}
+
+package "Agências" {
+    class Agencia
+
+    Agencia *-- Endereco
+}
+
+package "Veículos" {
+    class Veiculo
+    class TipoVeiculo
+    class StatusVeiculo
+
+    Veiculo --> TipoVeiculo
+    Veiculo --> StatusVeiculo
+}
+
+package "Aluguéis" {
+    class PedidoDeAluguel
+
+    PedidoDeAluguel --> Cliente
+    PedidoDeAluguel --> Agencia
+    PedidoDeAluguel --> Veiculo
+    PedidoDeAluguel --> StatusPedidoDeAluguel
+    PedidoDeAluguel --> StatusContratoDeCredito
+}
+
+package "Contratos" {
+    class ContratoDeLocacao
+    class ContratoSeguroDeCredito
+    class TipoContrato
+
+    ContratoDeLocacao --> PedidoDeAluguel
+    ContratoDeLocacao --> ContratoSeguroDeCredito
+    ContratoDeLocacao --> TipoContrato
+}
+
+package "Financeiro" {
+    class Financeiro
+    class Fatura
+    class Banco
+
+    Financeiro --> Fatura
+    Fatura --> Cliente
+    Fatura --> PedidoDeAluguel
+    Financeiro --> Agente
+    Banco --> ContratoSeguroDeCredito
+}
+
+class Endereco
+
+Usuario <|-- Agente
+Usuario <|-- Cliente
+
 @enduml
