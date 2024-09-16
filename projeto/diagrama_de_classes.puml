@@ -32,18 +32,14 @@ class Endereco {
     -String cep
 }
 
-class Veiculo {
+class Automovel {
     -Long id
-    -TipoVeiculo tipoVeiculo
-    -String matriculaVeiculo
-    -String marcaVeiculo
+    -String matriculaAutomovel
+    -String marcaAutomovel
     -String modelo
     -int ano
-    -String cor
     -String placa
-    -double quilometragem
-    -StatusVeiculo status
-    
+    -StatusAutomovel status    
 }
 
 class PedidoDeAluguel {
@@ -55,7 +51,7 @@ class PedidoDeAluguel {
     -double taxaDiaria
     -double valorTotal
     -StatusPedidoDeAluguel status = Status.Pendente
-    -bool desejaAdiquirirVeiculo
+    -bool desejaAdiquirirAutomovel
     -bool executarContratoDeLocacao = false
     -StatusContratoDeCredito statusContratoDeCredito
 
@@ -63,18 +59,7 @@ class PedidoDeAluguel {
     -executarContratoDeLocacao()
 }
 
-Enum TipoVeiculo {
-    CARRO
-    MOTO
-    CAMINHAO
-    VAN
-    ONIBUS
-    SUV
-    CONVERSIVEL
-    PICKUP
-}
-
-Enum StatusVeiculo {
+Enum StatusAutomovel {
     DISPONIVEL
     INDISPONIVEL
     ALUGADO
@@ -121,16 +106,14 @@ Enum SituacaoFatura{
 class Agencia {
     -Long id
     -String nome
-    -Endereco endereco
 }
 
 class Fatura {
     -Long id
-    -Date periodoDeReferencia
+    -Date inicioPeriodoDeReferencia
+    -Date finalPeriodoDeReferenci
     -Cliente cliente
-    -PedidoDeAluguel PedidoDeAluguel
-    -Double imposto
-    -Double taxas
+    -ContratoDeLocacao contratoDeLocacao
     -Double valorTotal
     -SituacaoFatura situacaoFatura
 }
@@ -149,7 +132,7 @@ class ContratoDeLocacao{
     -Agencia agenteLocador
     -Date dataInicio
     -Date dataTermino
-    -Veiculo veiculoLocado
+    -Automovel AutomovelLocado
     -TipoContrato tipoContrato
     -StatusFinanceiro statusFinanceiro
     -ContratoSeguroDeCredito contratoSeguroDeCredito
@@ -186,7 +169,7 @@ ContratoDeLocacao "1" o-- "1" ContratoSeguroDeCredito : consedido a <
 
 PedidoDeAluguel "*" --* "1" Cliente : Solicita  <
 PedidoDeAluguel "*" --* "1" Agencia : Recebe >
-PedidoDeAluguel "1" --* "1" Veiculo : Reserva >
+PedidoDeAluguel "1" --* "1" Automovel : Reserva >
 PedidoDeAluguel "1" -- "*" Agente : Avalia <
 
 
@@ -196,8 +179,6 @@ Financeiro "1" o-- "*" Agente : Atua <
 
 Cliente "1" *-- "1" Endereco : reside em >
 Cliente "1" *-- "3" Renda : recebe >
-
-Agencia "1" *-- "1" Endereco : situada em >
 
 Banco "1" o-- "*" AgenteBancario : Avalia pedidos de crédito <
 
