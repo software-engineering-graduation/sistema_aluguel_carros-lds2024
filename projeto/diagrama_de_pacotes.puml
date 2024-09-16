@@ -41,12 +41,9 @@ package "Contratos" {
 
 package "Financeiro" {
     class Financeiro
-    class Fatura
     class Banco
 
     Financeiro --> Fatura
-    Fatura --> Cliente
-    Fatura --> PedidoDeAluguel
     Financeiro --> Agente
     Banco --> ContratoSeguroDeCredito
     Banco --> AgenteBancario
