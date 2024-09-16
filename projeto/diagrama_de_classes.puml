@@ -39,16 +39,16 @@ class Automovel {
     -String modelo
     -int ano
     -String placa
-    -StatusAutomovel status    
+    -StatusAutomovel status
+	-Double mensalidade
 }
 
 class PedidoDeAluguel {
     -Long id
-    -Carro carro
+    -Automovel automovel
     -Cliente cliente
     -LocalDate dataPedidoDeAluguel
     -LocalDate dataDevolucao
-    -double taxaDiaria
     -double valorTotal
     -StatusPedidoDeAluguel status = Status.Pendente
     -bool desejaAdiquirirAutomovel
@@ -96,26 +96,10 @@ Enum TipoContrato{
     48_MESES
 }
 
-Enum SituacaoFatura{
-    PAGA
-    PENDENTE
-    ATRASADA
-    CANCELADA
-}
 
-class Agencia {
+class Empresa {
     -Long id
     -String nome
-}
-
-class Fatura {
-    -Long id
-    -Date inicioPeriodoDeReferencia
-    -Date finalPeriodoDeReferenci
-    -Cliente cliente
-    -ContratoDeLocacao contratoDeLocacao
-    -Double valorTotal
-    -SituacaoFatura situacaoFatura
 }
 
 class Financeiro {
@@ -124,21 +108,20 @@ class Financeiro {
     -verificarAlugueisNegados()
     -aprovarPedidoDeAluguel()
     -negarPedidoDeAluguel()
-    -verificarFaturasAtrasadas()
 }
 
 class ContratoDeLocacao{
     -Cliente cliente
-    -Agencia agenteLocador
+    -Empresa agenteLocador
     -Date dataInicio
     -Date dataTermino
     -Automovel AutomovelLocado
     -TipoContrato tipoContrato
     -StatusFinanceiro statusFinanceiro
+    -Double valorTotal
     -ContratoSeguroDeCredito contratoSeguroDeCredito
 
     -verificarSeguroDeCredito()
-    -gerarFatura()
 }
 
 class Agente extends Usuario{
@@ -168,12 +151,10 @@ ContratoDeLocacao "1" --* "1" PedidoDeAluguel : refere-se >
 ContratoDeLocacao "1" o-- "1" ContratoSeguroDeCredito : consedido a <
 
 PedidoDeAluguel "*" --* "1" Cliente : Solicita  <
-PedidoDeAluguel "*" --* "1" Agencia : Recebe >
+PedidoDeAluguel "*" --* "1" Empresa : Recebe >
 PedidoDeAluguel "1" --* "1" Automovel : Reserva >
 PedidoDeAluguel "1" -- "*" Agente : Avalia <
 
-
-ContratoDeLocacao "1" *-- "*" Fatura : gera >
 
 Financeiro "1" o-- "*" Agente : Atua <
 
