@@ -3,8 +3,10 @@
 package "Usuario e Clientes" {
     class Usuario
     class Cliente
+    class Endereco
     class Renda
     class Agente
+    class AgenteBancario
 
     Cliente *-- Endereco
     Cliente *-- Renda
@@ -12,17 +14,13 @@ package "Usuario e Clientes" {
 
 package "Agências" {
     class Agencia
+    class Endereco
 
     Agencia *-- Endereco
 }
 
 package "Veículos" {
     class Veiculo
-    class TipoVeiculo
-    class StatusVeiculo
-
-    Veiculo --> TipoVeiculo
-    Veiculo --> StatusVeiculo
 }
 
 package "Aluguéis" {
@@ -38,11 +36,9 @@ package "Aluguéis" {
 package "Contratos" {
     class ContratoDeLocacao
     class ContratoSeguroDeCredito
-    class TipoContrato
 
     ContratoDeLocacao --> PedidoDeAluguel
     ContratoDeLocacao --> ContratoSeguroDeCredito
-    ContratoDeLocacao --> TipoContrato
 }
 
 package "Financeiro" {
@@ -55,11 +51,11 @@ package "Financeiro" {
     Fatura --> PedidoDeAluguel
     Financeiro --> Agente
     Banco --> ContratoSeguroDeCredito
+    Banco --> AgenteBancario
 }
-
-class Endereco
 
 Usuario <|-- Agente
 Usuario <|-- Cliente
+Usuario <|-- AgenteBancario
 
 @enduml
