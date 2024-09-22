@@ -4,11 +4,12 @@ import java.util.List;
 
 import com.lds.aluguel_carros.enums.TipoUsuario;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,8 @@ public class ClienteCreateDTO extends UsuarioCreateDTO {
     @NotBlank(message = "As informações de rendimento são obrigatórias")
     @NotEmpty(message = "As informações de rendimento são obrigatórias")
     @NotNull(message = "As informações de rendimento são obrigatórias")
+    @Min(value = 3, message = "O usuário deve ter 3 rendimentos")
+    @Max(value = 3, message = "O usuário deve ter 3 rendimentos")
     private List<RendimentoCreateDTO> rendimentos;
 
     public ClienteCreateDTO(String nome, 

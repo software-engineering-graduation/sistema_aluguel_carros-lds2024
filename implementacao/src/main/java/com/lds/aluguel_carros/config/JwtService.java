@@ -9,7 +9,6 @@ import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.lds.aluguel_carros.dto.Login;
 import com.lds.aluguel_carros.entity.Usuario;
 
 import io.jsonwebtoken.Claims;
