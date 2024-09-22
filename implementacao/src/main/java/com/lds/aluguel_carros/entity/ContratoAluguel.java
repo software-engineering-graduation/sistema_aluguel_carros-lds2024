@@ -12,7 +12,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -40,8 +39,4 @@ public class ContratoAluguel {
     @OneToOne
     @JoinColumn(name = "credito_id")
     private Credito credito;
-
-    @ManyToOne
-    @JoinColumn(name = "propriedade_id")
-    private Usuario propriedade;
 }

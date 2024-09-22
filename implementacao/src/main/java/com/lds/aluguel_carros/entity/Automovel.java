@@ -3,6 +3,7 @@ package com.lds.aluguel_carros.entity;
 import java.math.BigDecimal;
 
 import com.lds.aluguel_carros.enums.StatusAutomovel;
+import com.lds.aluguel_carros.enums.TipoUsuario;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
@@ -11,8 +12,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -61,7 +60,13 @@ public class Automovel {
     @Schema(description = "Valor mensal do aluguel", example = "1000.00")
     private BigDecimal valorMensal;
 
-    @ManyToOne
-    @JoinColumn(name = "proprietario_id")
-    private Usuario proprietario;
+    @NotNull(message = "O proprietário é obrigatório")
+    @NotBlank(message = "O proprietário é obrigatório")
+    @Schema(description = "Proprietário do automóvel (CNPJ ou CPF)", example = "12345678910")
+    private String proprietarioIdentificacao;
+
+    @NotNull(message = "O tipo do proprietário é obrigatório")
+    @Enumerated(EnumType.STRING)
+    @Schema(description = "Tipo do proprietário", example = "CLIENTE")
+    private TipoUsuario proprietarioTipo;
 }

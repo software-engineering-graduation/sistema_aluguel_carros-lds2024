@@ -1,13 +1,17 @@
 package com.lds.aluguel_carros.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@Entity
 @SuperBuilder
+@MappedSuperclass
+@AllArgsConstructor
+@NoArgsConstructor
 public class Agente extends Usuario {
     @NotBlank(message = "O CNPJ é obrigatório")
     @Pattern(regexp = "\\d{14}", message = "CNPJ inválido. Deve conter 14 dígitos")

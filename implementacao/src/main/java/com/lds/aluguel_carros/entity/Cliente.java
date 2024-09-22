@@ -8,10 +8,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cliente extends Usuario {
     @NotBlank(message = "O RG é obrigatório")
     @Schema(description = "RG do cliente", example = "123456789")
