@@ -1,4 +1,4 @@
-package com.lds.aluguel_carros.aluguel_de_carros;
+package com.lds.aluguel_carros;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

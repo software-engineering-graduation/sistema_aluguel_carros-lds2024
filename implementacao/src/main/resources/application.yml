@@ -1,0 +1,43 @@
+# Spring Configuration
+spring:
+    application:
+        name: ong
+
+    datasource:
+        url: jdbc:h2:file:/home/jose/code/puc/fifth_semester/lds/sistema_aluguel_carros/implementacao/src/main/resources/db.sql;DATABASE_TO_UPPER=FALSE;DB_CLOSE_ON_EXIT=false
+        username: sa
+        password:
+        driverClassName: org.h2.Driver
+    jpa:
+        hibernate:
+          ddl-auto: create
+        show-sql: true
+        database-platform: org.hibernate.dialect.H2Dialect
+        # defer-datasource-initialization: true
+    h2:
+      console:
+        enabled: true
+        path: /h2
+        settings:
+          trace: false
+          web-allow-others: false
+
+# SpringDOC
+springdoc:
+  api-docs:
+    path: /docs
+  swagger-ui:
+    path: /swagger
+
+
+# Logging Configuration
+logging:
+  level:
+    org:
+        hibernate:
+            SQL: DEBUG
+            type:
+                descriptor:
+                    sql:
+                    BasicBinder: TRACE
+        springframework: DEBUG
