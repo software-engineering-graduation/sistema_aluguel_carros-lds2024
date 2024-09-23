@@ -1,85 +1,108 @@
-@startuml Diagrama
-package "Gestão de Usuários" {
-    abstract class Usuario
-
-    class Cliente
-
-    class Agente
-
-    class FuncionarioEmpresa
-
-    class FuncionarioBanco
-
-    class Rendimento
-
-    enum TipoUsuario {
-        CLIENTE
-        AGENTE
-        FUNCIONARIO_BANCO
-    }
-}
-
-package "Gestão de Aluguel" {
-    class Aluguel
-
-    class Automovel
-
-    enum StatusAutomovel {
-        DISPONIVEL
-        ALUGADO
+@startuml    
+    package "Controllers" {
+        class AluguelController
+        class UsuarioController
+        class ContratoController
+        class AutomovelController
+        class PagamentoController
     }
 
-    enum PrazoAluguel {
-        M12
-        M24
-        M36
-        M48
+    package "DTOs" {
+        class AluguelDTO
+        class UsuarioDTO
+        class ContratoDTO
+        class AutomovelDTO
+        class PagamentoDTO
     }
 
-    enum StatusPedido {
-        PENDENTE
-        APROVADO
-        REPROVADO
-        CANCELADO
-        EXECUTADO
+    package "Services" {
+        class AluguelService
+        class UsuarioService
+        class ContratoService
+        class AutomovelService
+        class PagamentoService
     }
-}
 
-package "Gestão de Contratos" {
-    class ContratoAluguel
-
-    class Credito
-
-    enum StatusContrato {
-        ATIVO
-        INATIVO
+    package "Mappers" {
+        class AluguelMapper
+        class UsuarioMapper
+        class ContratoMapper
+        class AutomovelMapper
+        class PagamentoMapper
     }
-}
 
-package "Controladores" {
-    class AluguelController
+    package "Repositories" {
+        class AluguelRepository
+        class UsuarioRepository
+        class ContratoRepository
+        class AutomovelRepository
+        class PagamentoRepository
+    }
 
-    class UsuarioController
+    package "Entities" {
+        abstract class Usuario {
+        }
+        class Cliente
+        class Agente
+        class FuncionarioEmpresa
+        class FuncionarioBanco
+        class Aluguel
+        class Automovel
+        class ContratoAluguel
+        class Pagamento
+        class Credito
+        class Rendimento
+        class TipoUsuario {
+            <<enumeration>>
+            CLIENTE
+            AGENTE
+            FUNCIONARIO_BANCO
+        }
+        enum StatusAutomovel {
+            DISPONIVEL
+            ALUGADO
+        }
+        enum PrazoAluguel {
+            M12
+            M24
+            M36
+            M48
+        }
+        enum StatusPedido {
+            PENDENTE
+            APROVADO
+            REPROVADO
+            CANCELADO
+            EXECUTADO
+        }
+        enum StatusContrato {
+            ATIVO
+            INATIVO
+        }
+    }
 
-    class ContratoAluguelController
+    Controllers ..> DTOs
+    Controllers ..> Services
+    Services ..> Repositories
+    Services ..> Mappers
+    Mappers ..> DTOs
+    Mappers ..> Entities
+    Repositories ..> Entities
 
-    class CreditoController
-}
-
-Usuario <|-- Cliente
-Usuario <|-- Agente
-Agente <|-- FuncionarioEmpresa
-Agente <|-- FuncionarioBanco
-Cliente "1" -- "0..3" Rendimento
-Cliente -- Aluguel
-Aluguel -- Automovel
-Aluguel -- ContratoAluguel
-ContratoAluguel -- Credito
-FuncionarioBanco "1" -- "*" Credito
-AluguelController -- Aluguel
-AluguelController -- Cliente
-UsuarioController -- Usuario
-ContratoAluguelController -- ContratoAluguel
-CreditoController -- Credito
-
-@enduml
+    Usuario <|-- Cliente
+    Usuario <|-- Agente
+    Agente <|-- FuncionarioEmpresa
+    Agente <|-- FuncionarioBanco
+    Usuario --> TipoUsuario
+    Cliente "1" -- "0..3" Rendimento
+    Cliente -- Aluguel
+    Agente -- Aluguel
+    Aluguel -- Automovel
+    Aluguel -- ContratoAluguel
+    ContratoAluguel -- Credito
+    ContratoAluguel -- Pagamento
+    FuncionarioBanco "1" -- "*" Credito
+    Automovel --> StatusAutomovel
+    Aluguel --> PrazoAluguel
+    Aluguel --> StatusPedido
+    ContratoAluguel --> StatusContrato
