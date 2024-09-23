@@ -1,56 +1,87 @@
-@startuml
+@startuml Diagrama
+package "Gestão de Usuários" {
+    abstract class Usuario
 
-package "Usuario e Clientes" {
-    class Usuario
     class Cliente
-    class Endereco
-    class Renda
+
     class Agente
-    class AgenteBancario
 
-    Cliente *-- Endereco
-    Cliente *-- Renda
+    class FuncionarioEmpresa
+
+    class FuncionarioBanco
+
+    class Rendimento
+
+    enum TipoUsuario {
+        CLIENTE
+        AGENTE
+        FUNCIONARIO_BANCO
+    }
 }
 
-package "Agências" {
-    class Agencia
+package "Gestão de Aluguel" {
+    class Aluguel
 
+    class Automovel
+
+    enum StatusAutomovel {
+        DISPONIVEL
+        ALUGADO
+    }
+
+    enum PrazoAluguel {
+        M12
+        M24
+        M36
+        M48
+    }
+
+    enum StatusPedido {
+        PENDENTE
+        APROVADO
+        REPROVADO
+        CANCELADO
+        EXECUTADO
+    }
 }
 
-package "Veículos" {
-    class Veiculo
+package "Gestão de Contratos" {
+    class ContratoAluguel
+
+    class Credito
+
+    enum StatusContrato {
+        ATIVO
+        INATIVO
+    }
 }
 
-package "Aluguéis" {
-    class PedidoDeAluguel
+package "Controladores" {
+    class AluguelController
 
-    PedidoDeAluguel --> Cliente
-    PedidoDeAluguel --> Agencia
-    PedidoDeAluguel --> Veiculo
-    PedidoDeAluguel --> StatusPedidoDeAluguel
-    PedidoDeAluguel --> StatusContratoDeCredito
+    class UsuarioController
+
+    class ContratoAluguelController
+
+    class CreditoController
 }
 
-package "Contratos" {
-    class ContratoDeLocacao
-    class ContratoSeguroDeCredito
-
-    ContratoDeLocacao --> PedidoDeAluguel
-    ContratoDeLocacao --> ContratoSeguroDeCredito
-}
-
-package "Financeiro" {
-    class Financeiro
-    class Banco
-
-    Financeiro --> Fatura
-    Financeiro --> Agente
-    Banco --> ContratoSeguroDeCredito
-    Banco --> AgenteBancario
-}
-
-Usuario <|-- Agente
+' Relações entre as classes de Modelo
 Usuario <|-- Cliente
-Usuario <|-- AgenteBancario
+Usuario <|-- Agente
+Agente <|-- FuncionarioEmpresa
+Agente <|-- FuncionarioBanco
+Cliente "1" -- "0..3" Rendimento
+Cliente -- Aluguel
+Aluguel -- Automovel
+Aluguel -- ContratoAluguel
+ContratoAluguel -- Credito
+FuncionarioBanco "1" -- "*" Credito
+' Relações entre Controladores e Classes de Modelo
+AluguelController -- Aluguel
+AluguelController -- Cliente
+UsuarioController -- Usuario
+ContratoAluguelController -- ContratoAluguel
+CreditoController -- Credito
 
 @enduml
