@@ -1,0 +1,95 @@
+@startuml
+
+' Components for different layers of the system
+
+package "Controllers" {
+    component EstudanteController
+    component CursoController
+    component InstrutorController
+    component MatriculaController
+}
+
+package "DTOs" {
+    component EstudanteDTO
+    component CursoDTO
+    component InstrutorDTO
+    component MatriculaDTO
+}
+
+package "Services" {
+    interface IEstudanteService
+    interface ICursoService
+    interface IInstrutorService
+    interface IMatriculaService
+
+    component EstudanteService
+    component CursoService
+    component InstrutorService
+    component MatriculaService
+}
+
+package "Mappers" {
+    component EstudanteMapper
+    component CursoMapper
+    component InstrutorMapper
+    component MatriculaMapper
+}
+
+package "Repositories" {
+    interface IEstudanteRepository
+    interface ICursoRepository
+    interface IInstrutorRepository
+    interface IMatriculaRepository
+
+    component EstudanteRepository
+    component CursoRepository
+    component InstrutorRepository
+    component MatriculaRepository
+}
+
+package "Entities" {
+    component Estudante
+    component Curso
+    component Instrutor
+    component Matricula
+}
+
+package "Database" {
+    component Database {
+        [PostgreSQL]
+    }
+}
+
+
+Controllers --> DTOs
+Controllers --> IEstudanteService
+Controllers --> ICursoService
+Controllers --> IInstrutorService
+Controllers --> IMatriculaService
+
+IEstudanteService <|.. EstudanteService
+ICursoService <|.. CursoService
+IInstrutorService <|.. InstrutorService
+IMatriculaService <|.. MatriculaService
+
+Services --> Repositories
+Services --> Mappers
+Mappers --> DTOs
+Mappers --> Entities
+
+Repositories --> IEstudanteRepository
+Repositories --> ICursoRepository
+Repositories --> IInstrutorRepository
+Repositories --> IMatriculaRepository
+
+IEstudanteRepository <|.. EstudanteRepository
+ICursoRepository <|.. CursoRepository
+IInstrutorRepository <|.. InstrutorRepository
+IMatriculaRepository <|.. MatriculaRepository
+
+Repositories --> Database
+
+Estudante "1" -- "*" Matricula
+Matricula "*" -- "1" Curso
+Curso "1" -- "*" Instrutor
+@enduml
