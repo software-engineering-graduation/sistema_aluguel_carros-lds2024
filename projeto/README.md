@@ -8,7 +8,7 @@
 ![Diagrama de classes](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/software-engineering-graduation/sistema_aluguel_carros-lds2024/main/projeto/diagrama_de_classes.puml)
 
 ## Diagrama de pacotes
-![Diagrama de pacotes](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/software-engineering-graduation/sistema_aluguel_carros-lds2024/blob/main/projeto/diagrama_de_pacotes.puml)
+![Diagrama de pacotes](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/software-engineering-graduation/sistema_aluguel_carros-lds2024/main/main/projeto/diagrama_de_pacotes.puml)
 
 ## Diagrama de componentes
 ![Diagrama de pacotes](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/software-engineering-graduation/sistema_aluguel_carros-lds2024/main/projeto/diagrama_de_componentes.puml)
