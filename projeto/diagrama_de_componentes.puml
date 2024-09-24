@@ -21,7 +21,6 @@ node "Servidor local" {
         [AluguelRepository]
     }
 
-
     database "Banco de Dados H2" {
         [H2Database]
     }
