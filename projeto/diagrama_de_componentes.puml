@@ -1,95 +1,62 @@
 @startuml
+node "Servidor local" {
+    component "Controller" {
+        [UsuarioController] 
+        [ClienteController]
+        [AgenteController]
+        [AluguelController]
+    }
 
-' Components for different layers of the system
+    component "Service" {
+        [UsuarioService] 
+        [ClienteService]
+        [AgenteService]
+        [AluguelService]
+    }
 
-package "Controllers" {
-    component EstudanteController
-    component CursoController
-    component InstrutorController
-    component MatriculaController
-}
+    component "Repository" {
+        [UsuarioRepository]
+        [ClienteRepository]
+        [AgenteRepository]
+        [AluguelRepository]
+    }
 
-package "DTOs" {
-    component EstudanteDTO
-    component CursoDTO
-    component InstrutorDTO
-    component MatriculaDTO
-}
 
-package "Services" {
-    interface IEstudanteService
-    interface ICursoService
-    interface IInstrutorService
-    interface IMatriculaService
-
-    component EstudanteService
-    component CursoService
-    component InstrutorService
-    component MatriculaService
-}
-
-package "Mappers" {
-    component EstudanteMapper
-    component CursoMapper
-    component InstrutorMapper
-    component MatriculaMapper
-}
-
-package "Repositories" {
-    interface IEstudanteRepository
-    interface ICursoRepository
-    interface IInstrutorRepository
-    interface IMatriculaRepository
-
-    component EstudanteRepository
-    component CursoRepository
-    component InstrutorRepository
-    component MatriculaRepository
-}
-
-package "Entities" {
-    component Estudante
-    component Curso
-    component Instrutor
-    component Matricula
-}
-
-package "Database" {
-    component Database {
-        [PostgreSQL]
+    database "Banco de Dados H2" {
+        [H2Database]
     }
 }
 
+node "Agentes Externos" {
+    [API Rest/HTTP Client]
+}
 
-Controllers --> DTOs
-Controllers --> IEstudanteService
-Controllers --> ICursoService
-Controllers --> IInstrutorService
-Controllers --> IMatriculaService
+node "Clientes Locais" {
+    [CLI (Interface de Linha de Comando)]
+}
 
-IEstudanteService <|.. EstudanteService
-ICursoService <|.. CursoService
-IInstrutorService <|.. InstrutorService
-IMatriculaService <|.. MatriculaService
+"Agentes Externos" --> UsuarioController
+"Agentes Externos" --> ClienteController
+"Agentes Externos" --> AgenteController
+"Agentes Externos" --> AluguelController
 
-Services --> Repositories
-Services --> Mappers
-Mappers --> DTOs
-Mappers --> Entities
+"Clientes Locais" --> UsuarioController
+"Clientes Locais" --> ClienteController
+"Clientes Locais" --> AgenteController
+"Clientes Locais" --> AluguelController
 
-Repositories --> IEstudanteRepository
-Repositories --> ICursoRepository
-Repositories --> IInstrutorRepository
-Repositories --> IMatriculaRepository
+UsuarioController --> UsuarioService
+ClienteController --> ClienteService
+AgenteController --> AgenteService
+AluguelController --> AluguelService
 
-IEstudanteRepository <|.. EstudanteRepository
-ICursoRepository <|.. CursoRepository
-IInstrutorRepository <|.. InstrutorRepository
-IMatriculaRepository <|.. MatriculaRepository
+UsuarioService --> UsuarioRepository
+ClienteService --> ClienteRepository
+AgenteService --> AgenteRepository
+AluguelService --> AluguelRepository
 
-Repositories --> Database
-
-Estudante "1" -- "*" Matricula
-Matricula "*" -- "1" Curso
-Curso "1" -- "*" Instrutor
+UsuarioRepository --> H2Database
+ClienteRepository --> H2Database
+AgenteRepository --> H2Database
+AluguelRepository --> H2Database
 @enduml
