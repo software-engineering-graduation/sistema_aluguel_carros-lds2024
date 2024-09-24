@@ -10,6 +10,6 @@ import com.lds.aluguel_carros.entity.Usuario;
 @NoRepositoryBean
 public interface IUsuarioRepository<T extends Usuario> extends JpaRepository<T, Long> {
     Optional<T> findByEmail(String email);
-
     Optional<T> findByEmailAndSenha(String email, String senha);
+    void deleteByEmail(String email);
 }

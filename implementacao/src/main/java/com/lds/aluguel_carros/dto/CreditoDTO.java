@@ -15,5 +15,6 @@ public class CreditoDTO {
     private Long id;
     private BigDecimal valor;
     private BigDecimal taxaJuros;
-    private FuncionarioBancoDTO concedente;
+    private String concedenteCnpj;
+    private String concedenteNome;
 }

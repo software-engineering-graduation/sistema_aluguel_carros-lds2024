@@ -30,5 +30,5 @@ INSERT INTO contrato_aluguel (status, valor_total, credito_id) VALUES
 ('ATIVO', 24000.00, 1);
 
 -- Inserting Alugueis
-INSERT INTO aluguel (prazo, status, valor, data_inicio, contrato_id, automovel_id, adquirir_propriedade) VALUES
-('MESES_12', 'PENDENTE', 1000.00, '2023-07-01', 1, 1, true);
+INSERT INTO aluguel (prazo, status, data_inicio, contrato_id, automovel_id, adquirir_propriedade) VALUES
+('MESES_12', 'PENDENTE', '2023-07-01', 1, 1, true);

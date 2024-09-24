@@ -22,5 +22,5 @@ public class AutomovelDTO {
     private String placa;
     private StatusAutomovel status;
     private BigDecimal valorMensal;
-    private UsuarioDTO proprietario;
+    private Long proprietarioIdentificacao;
 }

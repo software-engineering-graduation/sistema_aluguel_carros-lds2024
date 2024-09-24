@@ -12,6 +12,5 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class FuncionarioBancoDTO extends AgenteDTO {
-    private String cargo;
     private String banco;
 }

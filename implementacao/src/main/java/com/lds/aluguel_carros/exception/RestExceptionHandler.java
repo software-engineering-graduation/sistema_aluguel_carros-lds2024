@@ -3,6 +3,7 @@ package com.lds.aluguel_carros.exception;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +22,7 @@ import com.lds.aluguel_carros.exception.base.ApiSubError;
 import com.lds.aluguel_carros.exception.base.ApiValidationError;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -79,6 +81,27 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleEntityExists(EntityExistsException ex) {
         ApiError apiError = new ApiError(HttpStatus.CONFLICT);
         apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    protected ResponseEntity<Object> handleAllExceptions(ConstraintViolationException ex) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+        apiError.setMessage(ex.getLocalizedMessage());
+        return buildResponseEntity(apiError);
+    }
+    
+    @ExceptionHandler(UnauthorizedException.class)
+    protected ResponseEntity<Object> handleAllExceptions(UnauthorizedException ex) {
+        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED);
+        apiError.setMessage(ex.getLocalizedMessage());
+        return buildResponseEntity(apiError);
+    }
+    
+    @ExceptionHandler(BadRequestException.class)
+    protected ResponseEntity<Object> handleAllExceptions(BadRequestException ex) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+        apiError.setMessage(ex.getLocalizedMessage());
         return buildResponseEntity(apiError);
     }
 

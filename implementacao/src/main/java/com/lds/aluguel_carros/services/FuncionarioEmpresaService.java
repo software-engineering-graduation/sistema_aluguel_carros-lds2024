@@ -14,7 +14,12 @@ import com.lds.aluguel_carros.repository.FuncionarioEmpresaRepository;
 public class FuncionarioEmpresaService
         extends AbstractUsuarioService<FuncionarioEmpresa, FuncionarioEmpresaCreateDTO, FuncionarioEmpresaDTO> {
     public FuncionarioEmpresaService(FuncionarioEmpresaRepository repository, FuncionarioEmpresaMapper mapper,
-            AuthenticationManager authenticationManager, JwtService jwtService) {
-        super(repository, mapper, authenticationManager, jwtService);
+            AuthenticationManager authenticationManager, JwtService jwtService, UsuarioService usuarioService) {
+        super(repository, mapper, authenticationManager, jwtService, usuarioService);
+    }
+
+    @Override
+    public FuncionarioEmpresaDTO getCurrentUser() {
+        return mapper.toDTO(usuarioService.getCurrentFuncionarioEmpresa());
     }
 }

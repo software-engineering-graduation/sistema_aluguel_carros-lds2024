@@ -29,4 +29,19 @@ public class ClienteMapper
                 .rendimentos(rendimentosMapper.toEntity(dto.getRendimentos()))
                 .build();
     }
+
+    @Override
+    public ClienteDTO toDTO(Cliente entity) {
+        return ClienteDTO.builder()
+                .id(entity.getId())
+                .nome(entity.getNome())
+                .email(entity.getEmail())
+                .tipo(entity.getTipo())
+                .rg(entity.getRg())
+                .cpf(entity.getCpf())
+                .profissao(entity.getProfissao())
+                .endereco(entity.getEndereco())
+                .rendimentos(rendimentosMapper.toDTO(entity.getRendimentos()))
+                .build();
+    }
 }

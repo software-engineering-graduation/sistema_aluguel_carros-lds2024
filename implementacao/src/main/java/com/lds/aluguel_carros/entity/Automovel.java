@@ -17,12 +17,16 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Automovel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,9 +65,8 @@ public class Automovel {
     private BigDecimal valorMensal;
 
     @NotNull(message = "O proprietário é obrigatório")
-    @NotBlank(message = "O proprietário é obrigatório")
-    @Schema(description = "Proprietário do automóvel (CNPJ ou CPF)", example = "12345678910")
-    private String proprietarioIdentificacao;
+    @Schema(description = "ID do proprietário do automóvel", example = "1")
+    private Long proprietarioIdentificacao;
 
     @NotNull(message = "O tipo do proprietário é obrigatório")
     @Enumerated(EnumType.STRING)

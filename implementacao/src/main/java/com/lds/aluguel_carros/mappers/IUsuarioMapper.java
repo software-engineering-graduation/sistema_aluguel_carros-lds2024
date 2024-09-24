@@ -6,4 +6,6 @@ import com.lds.aluguel_carros.entity.Usuario;
 
 public interface IUsuarioMapper<T extends Usuario, D extends UsuarioCreateDTO, K extends UsuarioDTO> {
     T toEntity(D dto);
+
+    K toDTO(T entity);
 }

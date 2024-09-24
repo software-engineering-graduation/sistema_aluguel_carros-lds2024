@@ -23,5 +23,4 @@ public class AluguelDTO {
     private Date dataInicio;
     private ContratoAluguelDTO contrato;
     private AutomovelDTO automovel;
-    private boolean adquirirPropriedade;
 }

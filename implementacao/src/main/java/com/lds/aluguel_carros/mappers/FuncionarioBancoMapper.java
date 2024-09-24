@@ -21,4 +21,17 @@ public class FuncionarioBancoMapper
                 .banco(dto.getBanco())
                 .build();
     }
+
+    @Override
+    public FuncionarioBancoDTO toDTO(FuncionarioBanco entity) {
+        return FuncionarioBancoDTO.builder()
+                .id(entity.getId())
+                .nome(entity.getNome())
+                .email(entity.getEmail())
+                .tipo(entity.getTipo())
+                .cnpj(entity.getCnpj())
+                .cargo(entity.getCargo())
+                .banco(entity.getBanco())
+                .build();
+    }
 }

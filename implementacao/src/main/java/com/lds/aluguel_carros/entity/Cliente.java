@@ -9,6 +9,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -16,10 +18,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Cliente extends Usuario {
     @NotBlank(message = "O RG é obrigatório")
     @Schema(description = "RG do cliente", example = "123456789")
-    @Pattern(regexp = "\\d{9}", message = "RG inválido. Deve conter 9 dígitos")
+    @Pattern(regexp = "\\d{1,9}", message = "RG inválido. Deve conter no máximo 9 dígitos")
     private String rg;
 
     @NotBlank(message = "O CPF é obrigatório")

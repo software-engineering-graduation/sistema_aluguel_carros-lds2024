@@ -1,12 +1,12 @@
 package com.lds.aluguel_carros.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import com.lds.aluguel_carros.enums.PrazoAluguel;
 import com.lds.aluguel_carros.enums.StatusPedido;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,9 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
@@ -40,17 +38,11 @@ public class Aluguel {
     @Schema(description = "Status do pedido de aluguel", example = "PENDENTE")
     private StatusPedido status;
 
-    @NotNull(message = "O valor é obrigatório")
-    @Positive(message = "O valor deve ser positivo")
-    @Schema(description = "Valor do aluguel", example = "1000.00")
-    private BigDecimal valor;
-
     @NotNull(message = "A data de início é obrigatória")
-    @Future(message = "A data de início deve ser no futuro")
     @Schema(description = "Data de início do aluguel", example = "2023-07-01")
     private Date dataInicio;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contrato_id")
     private ContratoAluguel contrato;
 
@@ -61,4 +53,8 @@ public class Aluguel {
     @NotNull(message = "A opção de adquirir propriedade é obrigatória")
     @Schema(description = "Indica se o cliente deseja adquirir a propriedade ao final do contrato")
     private boolean adquirirPropriedade;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 }

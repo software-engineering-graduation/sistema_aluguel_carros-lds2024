@@ -21,4 +21,17 @@ public class FuncionarioEmpresaMapper
                 .empresa(dto.getEmpresa())
                 .build();
     }
+
+    @Override
+    public FuncionarioEmpresaDTO toDTO(FuncionarioEmpresa entity) {
+        return FuncionarioEmpresaDTO.builder()
+                .id(entity.getId())
+                .nome(entity.getNome())
+                .email(entity.getEmail())
+                .tipo(entity.getTipo())
+                .cnpj(entity.getCnpj())
+                .cargo(entity.getCargo())
+                .empresa(entity.getEmpresa())
+                .build();
+    }
 }

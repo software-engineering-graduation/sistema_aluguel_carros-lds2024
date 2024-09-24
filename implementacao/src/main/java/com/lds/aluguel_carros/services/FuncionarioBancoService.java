@@ -11,8 +11,15 @@ import com.lds.aluguel_carros.mappers.FuncionarioBancoMapper;
 import com.lds.aluguel_carros.repository.FuncionarioBancoRepository;
 
 @Service
-public class FuncionarioBancoService extends AbstractUsuarioService<FuncionarioBanco, FuncionarioBancoCreateDTO, FuncionarioBancoDTO> {
-    public FuncionarioBancoService(FuncionarioBancoRepository repository, FuncionarioBancoMapper mapper, AuthenticationManager authenticationManager, JwtService jwtService) {
-        super(repository, mapper, authenticationManager, jwtService);
+public class FuncionarioBancoService
+        extends AbstractUsuarioService<FuncionarioBanco, FuncionarioBancoCreateDTO, FuncionarioBancoDTO> {
+    public FuncionarioBancoService(FuncionarioBancoRepository repository, FuncionarioBancoMapper mapper,
+            AuthenticationManager authenticationManager, JwtService jwtService, UsuarioService usuarioService) {
+        super(repository, mapper, authenticationManager, jwtService, usuarioService);
+    }
+
+    @Override
+    public FuncionarioBancoDTO getCurrentUser() {
+        return mapper.toDTO(usuarioService.getCurrentFuncionarioBanco());
     }
 }

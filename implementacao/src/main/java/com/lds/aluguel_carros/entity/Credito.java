@@ -12,11 +12,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
 @SuperBuilder
+@NoArgsConstructor
 public class Credito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +34,7 @@ public class Credito {
     @Schema(description = "Taxa de juros do crédito", example = "0.05")
     private BigDecimal taxaJuros;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "concedente_id")
     private FuncionarioBanco concedente;
 }
