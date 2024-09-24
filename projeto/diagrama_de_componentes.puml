@@ -5,6 +5,7 @@ node "Servidor local" {
         [ClienteController]
         [AgenteController]
         [AluguelController]
+        [AutenticacaoController]
     }
 
     component "Service" {
@@ -12,6 +13,7 @@ node "Servidor local" {
         [ClienteService]
         [AgenteService]
         [AluguelService]
+        [AutenticacaoService]
     }
 
     component "Repository" {
@@ -21,33 +23,43 @@ node "Servidor local" {
         [AluguelRepository]
     }
 
+
     database "Banco de Dados H2" {
         [H2Database]
     }
 }
 
-node "Agentes Externos" {
-    [API Rest/HTTP Client]
+node "Banco" {
 }
 
-node "Clientes Locais" {
-    [CLI (Interface de Linha de Comando)]
+node "Agentes Locais" {
 }
 
-"Agentes Externos" --> UsuarioController
-"Agentes Externos" --> ClienteController
-"Agentes Externos" --> AgenteController
-"Agentes Externos" --> AluguelController
+node "Locatário" {
+}
 
-"Clientes Locais" --> UsuarioController
-"Clientes Locais" --> ClienteController
-"Clientes Locais" --> AgenteController
-"Clientes Locais" --> AluguelController
+interface "Requisiçao de aluguel" as RAL
+
+RAL  - [Locatário]
+
+"Locatário" --> AluguelController
+"Locatário" --> ClienteController
+"Locatário" --> AutenticacaoController
+
+"Banco" --> AluguelController
+"Banco" --> AutenticacaoController
+
+"Agentes Locais" --> UsuarioController
+"Agentes Locais" --> ClienteController
+"Agentes Locais" --> AgenteController
+"Agentes Locais" --> AluguelController
+"Agentes Locais" --> AutenticacaoController
 
 UsuarioController --> UsuarioService
 ClienteController --> ClienteService
 AgenteController --> AgenteService
 AluguelController --> AluguelService
+AutenticacaoController --> AutenticacaoService
 
 UsuarioService --> UsuarioRepository
 ClienteService --> ClienteRepository
