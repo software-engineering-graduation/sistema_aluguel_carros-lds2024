@@ -1,73 +1,93 @@
 @startuml
-node "Servidor local" {
-    component "Controller" {
-        [UsuarioController] 
-        [ClienteController]
-        [AgenteController]
-        [AluguelController]
-        [AutenticacaoController]
-    }
+left to right direction
+skinparam defaultFontSize 10
 
-    component "Service" {
-        [UsuarioService] 
-        [ClienteService]
-        [AgenteService]
-        [AluguelService]
-        [AutenticacaoService]
-    }
+node "Servidor central" {
+    package "Sistema de aluguel de automóveis" {
+        package "DTOs" {
+            component UsuarioDTO
+            component ClienteDTO
+            component AgenteDTO
+            component FuncionarioBancoDTO
+            component AluguelDTO
+            component AutomovelDTO
+            component ContratoAluguelDTO
+            component CreditoDTO
+            component RendimentoDTO
+        }
 
-    component "Repository" {
-        [UsuarioRepository]
-        [ClienteRepository]
-        [AgenteRepository]
-        [AluguelRepository]
-    }
+        package "Mappers" {
+            component UsuarioMapper
+            component ClienteMapper
+            component AgenteMapper
+            component FuncionarioBancoMapper
+            component AluguelMapper
+            component AutomovelMapper
+            component ContratoAluguelMapper
+            component CreditoMapper
+            component RendimentoMapper
+        }
 
+        package "Repositories" {
+            component UsuarioRepository
+            component ClienteRepository
+            component AgenteRepository
+            component FuncionarioBancoRepository
+            component AluguelRepository
+            component AutomovelRepository
+            component ContratoAluguelRepository
+            component CreditoRepository
+            component RendimentoRepository
+        }
 
-    database "Banco de Dados H2" {
-        [H2Database]
+        package "Services" {
+            component UsuarioService
+            component ClienteService
+            component AgenteService
+            component FuncionarioBancoService
+            component AluguelService
+            component AutomovelService
+            component ContratoAluguelService
+            component CreditoService
+            component RendimentoService
+        }
+
+        package "Componentes" {
+            component UsuarioController
+            component ClienteController
+            component AgenteController
+            component FuncionarioBancoController
+            component AluguelController
+            component AutomovelController
+            component ContratoAluguelController
+            component CreditoController
+            component RendimentoController
+        }
     }
+database "Banco de Dados H2" {
+    [H2Database]
+}
 }
 
 node "Banco" {
+    component CreditoService
 }
 
 node "Agentes Locais" {
+    component AgenteService
 }
 
 node "Locatário" {
+    component ClienteService
 }
 
-interface "Requisiçao de aluguel" as RAL
+interface "Requisição de aluguel" as RAL
 
-RAL  - [Locatário]
+RAL - [Locatário]
 
-"Locatário" --> AluguelController
-"Locatário" --> ClienteController
-"Locatário" --> AutenticacaoController
+"Sistema de aluguel de automóveis" --> "Banco de Dados H2" : <<Persistência>>
+"Servidor central" --> "Banco" : <<Serviço de Crédito>>
+"Servidor central" --> "Agentes Locais" : <<Serviço de gerenciamento>>
+"Servidor central" --> "Locatário" : <<Serviço de locação>>
 
-"Banco" --> AluguelController
-"Banco" --> AutenticacaoController
-
-"Agentes Locais" --> UsuarioController
-"Agentes Locais" --> ClienteController
-"Agentes Locais" --> AgenteController
-"Agentes Locais" --> AluguelController
-"Agentes Locais" --> AutenticacaoController
-
-UsuarioController --> UsuarioService
-ClienteController --> ClienteService
-AgenteController --> AgenteService
-AluguelController --> AluguelService
-AutenticacaoController --> AutenticacaoService
-
-UsuarioService --> UsuarioRepository
-ClienteService --> ClienteRepository
-AgenteService --> AgenteRepository
-AluguelService --> AluguelRepository
-
-UsuarioRepository --> H2Database
-ClienteRepository --> H2Database
-AgenteRepository --> H2Database
-AluguelRepository --> H2Database
 @enduml
