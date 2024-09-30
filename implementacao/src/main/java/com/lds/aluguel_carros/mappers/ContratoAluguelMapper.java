@@ -5,15 +5,15 @@ import org.springframework.stereotype.Component;
 
 import com.lds.aluguel_carros.dto.ContratoAluguelDTO;
 import com.lds.aluguel_carros.entity.ContratoAluguel;
-
-import lombok.RequiredArgsConstructor;
+import com.lds.aluguel_carros.entity.Usuario;
 
 @Component
-@RequiredArgsConstructor
 public class ContratoAluguelMapper {
     
     @Autowired
     CreditoMapper creditoMapper;
+    @Autowired
+    UsuarioMapper usuarioMapper;
 
     public ContratoAluguelDTO toDTO(ContratoAluguel contrato) {
         return ContratoAluguelDTO.builder()
@@ -21,6 +21,16 @@ public class ContratoAluguelMapper {
                 .status(contrato.getStatus())
                 .valorTotal(contrato.getValorTotal())
                 .credito(creditoMapper.toDTO(contrato.getCredito()))
+                .build();
+    }
+
+    public ContratoAluguelDTO toDTO(ContratoAluguel contrato, boolean adquirirPropriedade, Usuario usuario) {
+        return ContratoAluguelDTO.builder()
+                .id(contrato.getId())
+                .status(contrato.getStatus())
+                .valorTotal(contrato.getValorTotal())
+                .credito(creditoMapper.toDTO(contrato.getCredito()))
+                .propriedade(adquirirPropriedade ? usuarioMapper.toDTO(usuario) : null)
                 .build();
     }
 }

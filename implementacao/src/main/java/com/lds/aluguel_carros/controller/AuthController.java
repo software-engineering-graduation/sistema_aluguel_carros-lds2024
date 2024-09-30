@@ -30,7 +30,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -104,27 +103,6 @@ public class AuthController {
             }
         }
     }
-
-    // @PutMapping("/me")
-    // @Operation(summary = "Update current user", description = "Updates the
-    // information of the currently authenticated user")
-    // @ApiResponse(responseCode = "200", description = "User information updated
-    // successfully")
-    // @ApiResponse(responseCode = "401", description = "User not authenticated")
-    // public ResponseEntity<UsuarioDTO> updateCurrentUser(@Valid @RequestBody
-    // UsuarioDTO request) {
-    // UsuarioDTO updatedUser = null;
-    // try {
-    // updatedUser = clienteService.update(request);
-    // } catch (Exception e) {
-    // try {
-    // updatedUser = funcionarioBancoService.update(request);
-    // } catch (Exception e2) {
-    // updatedUser = funcionarioEmpresaService.update(request);
-    // }
-    // }
-    // return ResponseEntity.ok(updatedUser);
-    // }
 
     @DeleteMapping("/me")
     @Operation(summary = "Delete current user", description = "Deletes the account of the currently authenticated user")

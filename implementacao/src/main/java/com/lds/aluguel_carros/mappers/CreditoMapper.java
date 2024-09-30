@@ -9,6 +9,9 @@ import com.lds.aluguel_carros.entity.FuncionarioBanco;
 @Component
 public class CreditoMapper {
 
+    public CreditoMapper() {
+    }
+
     public CreditoDTO toDTO(Credito credito) {
         if (credito == null) return null;
         FuncionarioBanco funcionarioBanco = credito.getConcedente();

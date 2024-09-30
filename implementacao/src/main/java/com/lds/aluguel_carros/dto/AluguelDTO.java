@@ -19,7 +19,6 @@ public class AluguelDTO {
     private Long id;
     private PrazoAluguel prazo;
     private StatusPedido status;
-    private BigDecimal valor;
     private Date dataInicio;
     private ContratoAluguelDTO contrato;
     private AutomovelDTO automovel;

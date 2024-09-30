@@ -15,12 +15,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
 @SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ContratoAluguel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
